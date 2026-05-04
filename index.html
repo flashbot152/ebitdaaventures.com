@@ -4,34 +4,38 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ebitdaa Ventures LLC — Software Holding Company</title>
-  <meta name="description" content="Ebitdaa Ventures LLC is a software holding company building consumer and vertical SaaS products. Portfolio includes whatdoyouwant? and JustDashboard.">
+  <meta name="description" content="Ebitdaa Ventures LLC is a software holding company building consumer and vertical SaaS products.">
   <meta property="og:title" content="Ebitdaa Ventures LLC">
   <meta property="og:description" content="Building consumer and vertical SaaS products.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ebitdaaventures.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg: #09090b;
-      --bg-card: #111113;
-      --bg-card-hover: #18181b;
+      --bg: #050507;
+      --bg-elevated: #0a0a0d;
+      --bg-card: #0f0f12;
+      --bg-card-hover: #141418;
       --border: #27272a;
-      --border-subtle: #1e1e21;
+      --border-subtle: #1a1a1e;
       --text: #fafafa;
       --text-muted: #a1a1aa;
       --text-dim: #71717a;
       --accent: #6366f1;
+      --accent-light: #818cf8;
       --accent-glow: rgba(99, 102, 241, 0.15);
-      --wdyw-accent: #FF4E2A;
-      --wdyw-glow: rgba(255, 78, 42, 0.12);
-      --just-accent: #00B5E2;
-      --just-glow: rgba(0, 181, 226, 0.12);
-      --radius: 16px;
-      --radius-sm: 10px;
+      --wdyw-primary: #FF4E2A;
+      --wdyw-secondary: #FF8C00;
+      --wdyw-glow: rgba(255, 78, 42, 0.1);
+      --just-primary: #00B5E2;
+      --just-secondary: #2D4CB3;
+      --just-glow: rgba(0, 181, 226, 0.1);
+      --radius: 20px;
+      --radius-sm: 12px;
     }
 
     html { scroll-behavior: smooth; }
@@ -43,36 +47,69 @@
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
+      cursor: default;
+    }
+
+    /* ── Cursor glow ── */
+    .cursor-glow {
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s;
     }
 
     /* ── Grain overlay ── */
-    body::before {
+    body::after {
       content: '';
       position: fixed;
       inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
       pointer-events: none;
       z-index: 9999;
     }
 
+    /* ── Grid background ── */
+    .grid-bg {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 80px 80px;
+      pointer-events: none;
+      z-index: 0;
+      mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black 20%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black 20%, transparent 100%);
+    }
+
     /* ── Layout ── */
-    .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
 
     /* ── Navigation ── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
-      padding: 20px 0;
-      background: rgba(9, 9, 11, 0.8);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      padding: 0;
+      background: rgba(5, 5, 7, 0.7);
+      backdrop-filter: blur(24px) saturate(1.4);
+      -webkit-backdrop-filter: blur(24px) saturate(1.4);
       border-bottom: 1px solid var(--border-subtle);
+      transition: padding 0.3s, background 0.3s;
+    }
+    nav.scrolled {
+      background: rgba(5, 5, 7, 0.92);
     }
     nav .container {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      height: 64px;
     }
     .logo {
       font-size: 1.1rem;
@@ -80,89 +117,228 @@
       letter-spacing: -0.02em;
       color: var(--text);
       text-decoration: none;
+      transition: opacity 0.2s;
     }
+    .logo:hover { opacity: 0.8; }
     .logo span { color: var(--text-dim); font-weight: 400; }
-    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links { display: flex; gap: 8px; align-items: center; }
     .nav-links a {
       color: var(--text-muted);
       text-decoration: none;
-      font-size: 0.875rem;
+      font-size: 0.85rem;
       font-weight: 500;
-      transition: color 0.2s;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: all 0.2s;
     }
-    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover {
+      color: var(--text);
+      background: rgba(255,255,255,0.05);
+    }
+    .nav-cta {
+      background: var(--accent) !important;
+      color: white !important;
+      font-weight: 600 !important;
+    }
+    .nav-cta:hover {
+      background: var(--accent-light) !important;
+    }
+
+    /* ── Mobile menu ── */
+    .mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      cursor: pointer;
+      padding: 8px;
+    }
+    .mobile-toggle svg { display: block; }
 
     /* ── Hero ── */
     .hero {
-      padding: 200px 0 120px;
+      padding: 180px 0 100px;
       position: relative;
+      text-align: center;
+      overflow: hidden;
     }
-    .hero::before {
-      content: '';
+    .hero-orb {
       position: absolute;
-      top: 80px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      border-radius: 50%;
+      filter: blur(80px);
       pointer-events: none;
+      animation: orbFloat 8s ease-in-out infinite;
+    }
+    .hero-orb--1 {
+      width: 400px; height: 400px;
+      background: rgba(99, 102, 241, 0.12);
+      top: 40px; left: 50%;
+      transform: translateX(-70%);
+    }
+    .hero-orb--2 {
+      width: 300px; height: 300px;
+      background: rgba(236, 72, 153, 0.08);
+      top: 100px; right: 10%;
+      animation-delay: -3s;
+      animation-duration: 10s;
+    }
+    .hero-orb--3 {
+      width: 250px; height: 250px;
+      background: rgba(99, 102, 241, 0.06);
+      bottom: 0; left: 15%;
+      animation-delay: -5s;
+      animation-duration: 12s;
+    }
+    @keyframes orbFloat {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-30px) scale(1.05); }
     }
     .hero-badge {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 6px 16px;
+      padding: 6px 18px;
       border-radius: 100px;
       border: 1px solid var(--border);
-      background: var(--bg-card);
+      background: rgba(15, 15, 18, 0.8);
       font-size: 0.8rem;
       font-weight: 500;
       color: var(--text-muted);
-      margin-bottom: 32px;
+      margin-bottom: 40px;
+      backdrop-filter: blur(10px);
     }
     .hero-badge .dot {
       width: 6px; height: 6px;
       border-radius: 50%;
       background: #22c55e;
-      box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
     }
     .hero h1 {
-      font-size: clamp(2.8rem, 6vw, 4.5rem);
-      font-weight: 800;
-      letter-spacing: -0.035em;
-      line-height: 1.05;
-      margin-bottom: 24px;
-      max-width: 700px;
+      font-size: clamp(3rem, 7vw, 5rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.0;
+      margin-bottom: 28px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
     }
     .hero h1 .gradient {
-      background: linear-gradient(135deg, var(--accent), #a78bfa, #ec4899);
+      background: linear-gradient(135deg, var(--accent), #a78bfa, #ec4899, var(--accent));
+      background-size: 300% 300%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      animation: gradientShift 6s ease infinite;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
     .hero p {
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       color: var(--text-muted);
-      max-width: 520px;
+      max-width: 560px;
+      margin: 0 auto 48px;
       line-height: 1.7;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      border: none;
+    }
+    .btn--primary {
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 4px 24px rgba(99, 102, 241, 0.3);
+    }
+    .btn--primary:hover {
+      background: var(--accent-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(99, 102, 241, 0.4);
+    }
+    .btn--ghost {
+      background: rgba(255,255,255,0.04);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+    .btn--ghost:hover {
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+      transform: translateY(-2px);
+    }
+
+    /* ── Marquee ── */
+    .marquee-section {
+      padding: 40px 0;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      background: var(--bg-elevated);
+      overflow: hidden;
+    }
+    .marquee-track {
+      display: flex;
+      gap: 64px;
+      animation: marquee 25s linear infinite;
+      width: max-content;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .marquee-item {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-dim);
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      letter-spacing: 0.02em;
+    }
+    .marquee-item .sep {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--border);
     }
 
     /* ── Section ── */
-    section { padding: 100px 0; }
+    section { padding: 120px 0; position: relative; }
     .section-label {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 500;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       color: var(--accent);
       margin-bottom: 16px;
     }
     .section-title {
-      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
-      font-weight: 700;
-      letter-spacing: -0.03em;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.035em;
       margin-bottom: 16px;
     }
     .section-desc {
@@ -170,7 +346,7 @@
       color: var(--text-muted);
       max-width: 560px;
       line-height: 1.7;
-      margin-bottom: 56px;
+      margin-bottom: 64px;
     }
 
     /* ── Portfolio Cards ── */
@@ -183,103 +359,225 @@
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius);
-      padding: 40px;
-      transition: all 0.3s ease;
+      padding: 44px;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       position: relative;
       overflow: hidden;
     }
+    .card-glow {
+      position: absolute;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      filter: blur(60px);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .card:hover .card-glow { opacity: 1; }
     .card::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
-      height: 1px;
+      height: 2px;
       opacity: 0;
-      transition: opacity 0.3s;
+      transition: opacity 0.4s;
     }
     .card:hover {
       border-color: var(--border);
       background: var(--bg-card-hover);
-      transform: translateY(-2px);
+      transform: translateY(-4px);
     }
     .card:hover::before { opacity: 1; }
+
+    /* ── wdyw Card ── */
+    .card--wdyw .card-glow { background: rgba(255, 78, 42, 0.06); top: -50px; right: -50px; }
     .card--wdyw::before {
-      background: linear-gradient(90deg, transparent, var(--wdyw-accent), transparent);
+      background: linear-gradient(90deg, transparent, var(--wdyw-primary), var(--wdyw-secondary), transparent);
     }
     .card--wdyw:hover {
-      box-shadow: 0 8px 40px var(--wdyw-glow);
+      box-shadow: 0 12px 48px var(--wdyw-glow), 0 0 0 1px rgba(255, 78, 42, 0.08);
     }
+
+    /* ── JustDashboard Card ── */
+    .card--just .card-glow { background: rgba(0, 181, 226, 0.06); top: -50px; right: -50px; }
     .card--just::before {
-      background: linear-gradient(90deg, transparent, var(--just-accent), transparent);
+      background: linear-gradient(90deg, transparent, var(--just-primary), var(--just-secondary), transparent);
     }
     .card--just:hover {
-      box-shadow: 0 8px 40px var(--just-glow);
+      box-shadow: 0 12px 48px var(--just-glow), 0 0 0 1px rgba(0, 181, 226, 0.08);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
     }
     .card-icon {
-      width: 48px; height: 48px;
+      width: 52px; height: 52px;
       border-radius: var(--radius-sm);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.4rem;
-      margin-bottom: 28px;
+      font-size: 1.5rem;
     }
     .card--wdyw .card-icon {
-      background: var(--wdyw-glow);
-      border: 1px solid rgba(255, 78, 42, 0.2);
+      background: linear-gradient(135deg, var(--wdyw-glow), rgba(255, 140, 0, 0.08));
+      border: 1px solid rgba(255, 78, 42, 0.15);
     }
     .card--just .card-icon {
-      background: var(--just-glow);
-      border: 1px solid rgba(0, 181, 226, 0.2);
+      background: linear-gradient(135deg, var(--just-glow), rgba(45, 76, 179, 0.08));
+      border: 1px solid rgba(0, 181, 226, 0.15);
     }
     .card-status {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      margin-bottom: 20px;
-      padding: 4px 10px;
+      padding: 5px 12px;
       border-radius: 100px;
     }
     .card--wdyw .card-status {
-      color: var(--wdyw-accent);
+      color: var(--wdyw-primary);
       background: var(--wdyw-glow);
+      border: 1px solid rgba(255, 78, 42, 0.12);
     }
     .card--just .card-status {
-      color: var(--just-accent);
+      color: var(--just-primary);
       background: var(--just-glow);
+      border: 1px solid rgba(0, 181, 226, 0.12);
     }
+    .status-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .card--wdyw .status-dot { background: var(--wdyw-primary); box-shadow: 0 0 6px rgba(255, 78, 42, 0.5); }
+    .card--just .status-dot { background: var(--just-primary); animation: pulse 2s ease-in-out infinite; }
     .card h3 {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       font-weight: 700;
       letter-spacing: -0.02em;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
     .card p {
       color: var(--text-muted);
       font-size: 0.95rem;
-      line-height: 1.7;
+      line-height: 1.75;
       margin-bottom: 28px;
     }
     .card-tags {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
+      margin-bottom: 28px;
     }
     .tag {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 500;
       padding: 5px 12px;
       border-radius: 6px;
-      background: rgba(255, 255, 255, 0.04);
+      background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--border-subtle);
       color: var(--text-dim);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .card:hover .tag {
+      border-color: var(--border);
+      color: var(--text-muted);
+    }
+    .card-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      transition: all 0.25s;
+      padding: 12px 24px;
+      border-radius: 10px;
+    }
+    .card--wdyw .card-action {
+      color: white;
+      background: var(--wdyw-primary);
+      box-shadow: 0 4px 16px rgba(255, 78, 42, 0.25);
+    }
+    .card--wdyw .card-action:hover {
+      background: #e5441f;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(255, 78, 42, 0.35);
+    }
+    .card--wdyw .card-action svg { transition: transform 0.2s; }
+    .card--wdyw .card-action:hover svg { transform: translateX(3px); }
+    .card--just .card-action {
+      color: var(--text-dim);
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border-subtle);
+      cursor: default;
     }
 
-    /* ── About / Founder ── */
+    /* ── App Store badge ── */
+    .app-store-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      border-radius: 10px;
+      background: white;
+      color: #111;
+      text-decoration: none;
+      font-size: 0.8rem;
+      transition: all 0.25s;
+    }
+    .app-store-badge:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255,255,255,0.12);
+    }
+    .app-store-badge .badge-text { text-align: left; line-height: 1.2; }
+    .app-store-badge .badge-sub { font-size: 0.6rem; font-weight: 400; display: block; }
+    .app-store-badge .badge-main { font-size: 1rem; font-weight: 600; display: block; }
+
+    /* ── Coming soon notify ── */
+    .notify-form {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .notify-input {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.82rem;
+      color: var(--text);
+      font-family: inherit;
+      outline: none;
+      width: 200px;
+      transition: border-color 0.2s;
+    }
+    .notify-input::placeholder { color: var(--text-dim); }
+    .notify-input:focus { border-color: var(--just-primary); }
+    .notify-btn {
+      background: rgba(0, 181, 226, 0.12);
+      border: 1px solid rgba(0, 181, 226, 0.2);
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--just-primary);
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+    .notify-btn:hover {
+      background: rgba(0, 181, 226, 0.2);
+    }
+
+    /* ── About ── */
     .about-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -303,15 +601,15 @@
       margin-top: 40px;
     }
     .stat-num {
-      font-size: 2rem;
-      font-weight: 800;
+      font-size: 2.2rem;
+      font-weight: 900;
       letter-spacing: -0.03em;
       background: linear-gradient(135deg, var(--text), var(--text-muted));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
     .stat-label {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-dim);
       margin-top: 4px;
     }
@@ -319,40 +617,90 @@
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius);
-      padding: 40px;
+      padding: 44px;
+      transition: all 0.3s;
+    }
+    .founder-card:hover {
+      border-color: var(--border);
+      transform: translateY(-2px);
     }
     .founder-card .founder-name {
-      font-size: 1.25rem;
+      font-size: 1.35rem;
       font-weight: 700;
       margin-bottom: 4px;
     }
     .founder-card .founder-title {
       font-size: 0.85rem;
-      color: var(--text-dim);
+      color: var(--accent-light);
       margin-bottom: 20px;
+      font-weight: 500;
     }
     .founder-card p {
       color: var(--text-muted);
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       line-height: 1.8;
     }
-    .founder-meta {
-      margin-top: 24px;
-      padding-top: 24px;
+
+    /* ── Ticker / Numbers ── */
+    .ticker-section {
+      padding: 80px 0;
       border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      background: var(--bg-elevated);
     }
-    .founder-meta-row {
-      display: flex;
-      justify-content: space-between;
+    .ticker-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      text-align: center;
+    }
+    .ticker-item .ticker-num {
+      font-size: 3rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, var(--text), var(--text-muted));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .ticker-item .ticker-label {
       font-size: 0.8rem;
       color: var(--text-dim);
-      margin-bottom: 8px;
+      font-weight: 500;
     }
-    .founder-meta-row span:last-child { color: var(--text-muted); }
+
+    /* ── Contact CTA ── */
+    .cta-section {
+      padding: 120px 0;
+      text-align: center;
+      position: relative;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-section h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      margin-bottom: 16px;
+    }
+    .cta-section p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 480px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
 
     /* ── Footer ── */
     footer {
-      padding: 48px 0;
+      padding: 40px 0;
       border-top: 1px solid var(--border-subtle);
     }
     .footer-inner {
@@ -361,19 +709,20 @@
       justify-content: space-between;
     }
     .footer-left {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-dim);
     }
     .footer-right {
-      font-size: 0.8rem;
-      color: var(--text-dim);
+      display: flex;
+      gap: 24px;
+      font-size: 0.78rem;
     }
     .footer-right a {
-      color: var(--text-muted);
+      color: var(--text-dim);
       text-decoration: none;
       transition: color 0.2s;
     }
-    .footer-right a:hover { color: var(--text); }
+    .footer-right a:hover { color: var(--text-muted); }
 
     /* ── Divider ── */
     .divider {
@@ -382,96 +731,153 @@
       margin: 0;
     }
 
-    /* ── Responsive ── */
-    @media (max-width: 768px) {
-      .portfolio-grid { grid-template-columns: 1fr; }
-      .about-grid { grid-template-columns: 1fr; gap: 40px; }
-      .stats-row { gap: 32px; }
-      .hero { padding: 160px 0 80px; }
-      section { padding: 64px 0; }
-      .card { padding: 28px; }
-      .nav-links { gap: 20px; }
-    }
-    @media (max-width: 480px) {
-      .nav-links { display: none; }
-      .hero h1 { font-size: 2.2rem; }
-    }
-
-    /* ── Animations ── */
-    .fade-in {
+    /* ── Scroll reveal ── */
+    .reveal {
       opacity: 0;
-      transform: translateY(20px);
-      animation: fadeUp 0.6s ease forwards;
+      transform: translateY(30px);
+      transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
-    .fade-in.visible {
+    .reveal.visible {
       opacity: 1;
       transform: translateY(0);
     }
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .ticker-grid { grid-template-columns: repeat(2, 1fr); gap: 40px; }
+      .stats-row { gap: 32px; }
+      .hero { padding: 150px 0 80px; }
+      section { padding: 80px 0; }
+      .card { padding: 32px; }
     }
-    .fade-in:nth-child(2) { animation-delay: 0.15s; }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .mobile-toggle { display: block; }
+      .hero h1 { font-size: 2.4rem; }
+      .hero p { font-size: 1rem; }
+      .ticker-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+      .footer-right { justify-content: center; }
+      .notify-form { flex-direction: column; }
+      .notify-input { width: 100%; }
+    }
   </style>
 </head>
 <body>
 
+  <div class="cursor-glow" id="cursorGlow"></div>
+  <div class="grid-bg"></div>
+
   <!-- Nav -->
-  <nav>
+  <nav id="navbar">
     <div class="container">
       <a href="#" class="logo">ebitdaa <span>ventures</span></a>
       <div class="nav-links">
         <a href="#portfolio">Portfolio</a>
         <a href="#about">About</a>
-        <a href="mailto:jordan@ebitdaaventures.com">Contact</a>
+        <a href="#contact" class="nav-cta">Get in Touch</a>
       </div>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
     </div>
   </nav>
 
   <!-- Hero -->
   <section class="hero">
+    <div class="hero-orb hero-orb--1"></div>
+    <div class="hero-orb hero-orb--2"></div>
+    <div class="hero-orb hero-orb--3"></div>
     <div class="container">
-      <div class="hero-badge">
+      <div class="hero-badge reveal">
         <span class="dot"></span>
         Building in public
       </div>
-      <h1>Software that <span class="gradient">moves</span> industries.</h1>
-      <p>Ebitdaa Ventures LLC is a software holding company building consumer and vertical SaaS products — from real-time group dining to self-storage operations.</p>
+      <h1 class="reveal reveal-delay-1">Software that <span class="gradient">moves</span> industries.</h1>
+      <p class="reveal reveal-delay-2">Ebitdaa Ventures LLC is a software holding company building consumer and vertical SaaS products — from real-time group dining to self-storage operations.</p>
+      <div class="hero-ctas reveal reveal-delay-3">
+        <a href="#portfolio" class="btn btn--primary">Explore Portfolio →</a>
+        <a href="#about" class="btn btn--ghost">Our Story</a>
+      </div>
     </div>
   </section>
 
-  <hr class="divider">
+  <!-- Marquee -->
+  <div class="marquee-section">
+    <div class="marquee-track" id="marquee">
+      <span class="marquee-item">Consumer Apps <span class="sep"></span></span>
+      <span class="marquee-item">Vertical SaaS <span class="sep"></span></span>
+      <span class="marquee-item">Self-Storage Tech <span class="sep"></span></span>
+      <span class="marquee-item">Real-Time Collaboration <span class="sep"></span></span>
+      <span class="marquee-item">Operator-Built <span class="sep"></span></span>
+      <span class="marquee-item">iOS &amp; Web <span class="sep"></span></span>
+      <span class="marquee-item">Firebase <span class="sep"></span></span>
+      <span class="marquee-item">Next.js <span class="sep"></span></span>
+      <span class="marquee-item">React Native <span class="sep"></span></span>
+      <span class="marquee-item">Analytics <span class="sep"></span></span>
+      <!-- duplicate for seamless loop -->
+      <span class="marquee-item">Consumer Apps <span class="sep"></span></span>
+      <span class="marquee-item">Vertical SaaS <span class="sep"></span></span>
+      <span class="marquee-item">Self-Storage Tech <span class="sep"></span></span>
+      <span class="marquee-item">Real-Time Collaboration <span class="sep"></span></span>
+      <span class="marquee-item">Operator-Built <span class="sep"></span></span>
+      <span class="marquee-item">iOS &amp; Web <span class="sep"></span></span>
+      <span class="marquee-item">Firebase <span class="sep"></span></span>
+      <span class="marquee-item">Next.js <span class="sep"></span></span>
+      <span class="marquee-item">React Native <span class="sep"></span></span>
+      <span class="marquee-item">Analytics <span class="sep"></span></span>
+    </div>
+  </div>
 
   <!-- Portfolio -->
   <section id="portfolio">
     <div class="container">
-      <div class="section-label">Portfolio</div>
-      <h2 class="section-title">What we're building</h2>
-      <p class="section-desc">Two products. Two categories. One thesis: software built by operators outperforms software built by outsiders.</p>
+      <div class="section-label reveal">Portfolio</div>
+      <h2 class="section-title reveal reveal-delay-1">What we're building</h2>
+      <p class="section-desc reveal reveal-delay-2">Two products. Two categories. One thesis: software built by operators outperforms software built by outsiders.</p>
 
       <div class="portfolio-grid">
-        <!-- wdyw? Card -->
-        <div class="card card--wdyw fade-in">
-          <div class="card-icon">🍽</div>
-          <div class="card-status">
-            <span class="dot" style="width:5px;height:5px;border-radius:50%;background:var(--wdyw-accent);display:inline-block;"></span>
-            Live on App Store
+        <!-- wdyw? -->
+        <div class="card card--wdyw reveal" id="cardWdyw">
+          <div class="card-glow"></div>
+          <div class="card-header">
+            <div class="card-icon">🍽</div>
+            <div class="card-status">
+              <span class="status-dot"></span>
+              Live on App Store
+            </div>
           </div>
           <h3>whatdoyouwant?</h3>
-          <p>A collaborative iOS app for real-time group restaurant discovery. Swipe together, match instantly — no more "I don't know, what do you want?"</p>
+          <p>A collaborative iOS app for real-time group restaurant discovery. Swipe on nearby restaurants together, match instantly — no more "I don't know, what do you want?"</p>
           <div class="card-tags">
             <span class="tag">iOS</span>
             <span class="tag">React Native</span>
             <span class="tag">Firebase</span>
             <span class="tag">Consumer</span>
           </div>
+          <a href="https://apps.apple.com/app/whatdoyouwant/id6742500592" target="_blank" rel="noopener" class="app-store-badge">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="#111"><path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 21.99 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.1 21.99C7.79 22.03 6.8 20.68 5.96 19.47C4.25 16.97 2.94 12.45 4.7 9.39C5.57 7.87 7.13 6.91 8.82 6.88C10.1 6.86 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5ZM13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13 3.5Z"/></svg>
+            <span class="badge-text">
+              <span class="badge-sub">Download on the</span>
+              <span class="badge-main">App Store</span>
+            </span>
+          </a>
         </div>
 
-        <!-- JustDashboard Card -->
-        <div class="card card--just fade-in">
-          <div class="card-icon">📊</div>
-          <div class="card-status">
-            <span class="dot" style="width:5px;height:5px;border-radius:50%;background:var(--just-accent);display:inline-block;"></span>
-            In Development
+        <!-- JustDashboard -->
+        <div class="card card--just reveal reveal-delay-1" id="cardJust">
+          <div class="card-glow"></div>
+          <div class="card-header">
+            <div class="card-icon">📊</div>
+            <div class="card-status">
+              <span class="status-dot"></span>
+              Coming Soon
+            </div>
           </div>
           <h3>JustDashboard</h3>
           <p>An owner-facing analytics and operations interface for independent storage operators — powered by a full self-storage operating system built from the ground up.</p>
@@ -481,6 +887,62 @@
             <span class="tag">Self-Storage</span>
             <span class="tag">Analytics</span>
           </div>
+          <div class="card-action">
+            🔔 Get notified at launch
+          </div>
+          <form class="notify-form" id="notifyForm" onsubmit="handleNotify(event)">
+            <input type="email" class="notify-input" placeholder="your@email.com" required>
+            <button type="submit" class="notify-btn">Notify Me</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ticker -->
+  <div class="ticker-section">
+    <div class="container">
+      <div class="ticker-grid">
+        <div class="ticker-item reveal">
+          <div class="ticker-num" data-count="2">0</div>
+          <div class="ticker-label">Products in Portfolio</div>
+        </div>
+        <div class="ticker-item reveal reveal-delay-1">
+          <div class="ticker-num" data-count="20" data-suffix="+">0</div>
+          <div class="ticker-label">Facilities Managed</div>
+        </div>
+        <div class="ticker-item reveal reveal-delay-2">
+          <div class="ticker-num" data-count="2" data-suffix=" Verticals">0</div>
+          <div class="ticker-label">Consumer &amp; Enterprise</div>
+        </div>
+        <div class="ticker-item reveal reveal-delay-3">
+          <div class="ticker-num" data-count="2026">0</div>
+          <div class="ticker-label">Founded</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- About -->
+  <section id="about">
+    <div class="container">
+      <div class="section-label reveal">About</div>
+      <h2 class="section-title reveal reveal-delay-1">Operator-built software</h2>
+      <p class="section-desc reveal reveal-delay-2">We don't build for industries we've read about. We build for industries we run.</p>
+
+      <div class="about-grid">
+        <div class="about-content reveal">
+          <h3>The thesis</h3>
+          <p>Ebitdaa Ventures builds software at the intersection of consumer behavior and operational intelligence. Every product starts with a real problem — felt firsthand — and ships with the speed and precision of a team that knows what good looks like from the inside.</p>
+          <p>The self-storage operating system wasn't designed by a product team in a conference room. It was built by an operator managing 20+ facilities who got tired of the tools that were supposed to help.</p>
+        </div>
+
+        <div class="founder-card reveal reveal-delay-1">
+          <div class="founder-name">Jordan Ellis</div>
+          <div class="founder-title">Founder &amp; CEO</div>
+          <p>Jordan founded Ebitdaa Ventures to build the software he wished existed — first for himself as an operator, then for every operator stuck with legacy tooling. The company's consumer products are rooted in the same philosophy: solve real friction, ship fast, iterate relentlessly.</p>
         </div>
       </div>
     </div>
@@ -488,50 +950,13 @@
 
   <hr class="divider">
 
-  <!-- About -->
-  <section id="about">
+  <!-- Contact CTA -->
+  <section class="cta-section" id="contact">
     <div class="container">
-      <div class="section-label">About</div>
-      <h2 class="section-title">Operator-built software</h2>
-      <p class="section-desc">We don't build for industries we've read about. We build for industries we run.</p>
-
-      <div class="about-grid">
-        <div class="about-content fade-in">
-          <h3>The thesis</h3>
-          <p>Ebitdaa Ventures builds software at the intersection of consumer behavior and operational intelligence. Every product starts with a real problem — felt firsthand — and ships with the speed and precision of a team that knows what good looks like from the inside.</p>
-          <p>The self-storage operating system wasn't designed by a product team in a conference room. It was built by an operator managing 20+ facilities who got tired of the tools that were supposed to help.</p>
-          <div class="stats-row">
-            <div>
-              <div class="stat-num">2</div>
-              <div class="stat-label">Active products</div>
-            </div>
-            <div>
-              <div class="stat-num">20+</div>
-              <div class="stat-label">Facilities managed</div>
-            </div>
-            <div>
-              <div class="stat-num">2026</div>
-              <div class="stat-label">Founded</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="founder-card fade-in">
-          <div class="founder-name">Jordan Ellis</div>
-          <div class="founder-title">Founder & CEO</div>
-          <p>Jordan founded Ebitdaa Ventures to build the software he wished existed — first for himself as a self-storage operator, then for every operator stuck with legacy tooling. The company's consumer products are rooted in the same philosophy: solve real friction, ship fast, iterate relentlessly.</p>
-          <div class="founder-meta">
-            <div class="founder-meta-row">
-              <span>Location</span>
-              <span>St. Petersburg, FL</span>
-            </div>
-            <div class="founder-meta-row">
-              <span>Background</span>
-              <span>Self-Storage Operations</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="section-label reveal">Contact</div>
+      <h2 class="reveal reveal-delay-1">Let's build something.</h2>
+      <p class="reveal reveal-delay-2">Whether you're an investor, potential partner, or curious operator — we'd love to hear from you.</p>
+      <a href="mailto:jordan@ebitdaaventures.com" class="btn btn--primary reveal reveal-delay-3">jordan@ebitdaaventures.com →</a>
     </div>
   </section>
 
@@ -540,26 +965,146 @@
     <div class="container">
       <div class="footer-inner">
         <div class="footer-left">
-          &copy; 2026 Ebitdaa Ventures LLC &middot; St. Petersburg, FL
+          &copy; 2026 Ebitdaa Ventures LLC
         </div>
         <div class="footer-right">
-          <a href="mailto:jordan@ebitdaaventures.com">jordan@ebitdaaventures.com</a>
+          <a href="mailto:jordan@ebitdaaventures.com">Email</a>
+          <a href="https://apps.apple.com/app/whatdoyouwant/id6742500592" target="_blank" rel="noopener">App Store</a>
         </div>
       </div>
     </div>
   </footer>
 
   <script>
-    // Intersection Observer for fade-in animations
-    const observer = new IntersectionObserver((entries) => {
+    // ── Cursor glow ──
+    const glow = document.getElementById('cursorGlow');
+    let mouseX = 0, mouseY = 0, glowX = 0, glowY = 0;
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+    function animateGlow() {
+      glowX += (mouseX - glowX) * 0.08;
+      glowY += (mouseY - glowY) * 0.08;
+      glow.style.left = glowX + 'px';
+      glow.style.top = glowY + 'px';
+      requestAnimationFrame(animateGlow);
+    }
+    animateGlow();
+
+    // ── Card tilt on mouse ──
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        card.style.transform = `translateY(-4px) perspective(800px) rotateX(${-y * 4}deg) rotateY(${x * 4}deg)`;
+        const gl = card.querySelector('.card-glow');
+        if (gl) {
+          gl.style.left = (e.clientX - rect.left - 150) + 'px';
+          gl.style.top = (e.clientY - rect.top - 150) + 'px';
+        }
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
+    });
+
+    // ── Scroll reveal ──
+    const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
         }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    // ── Animated counters ──
+    let tickerAnimated = false;
+    const tickerObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !tickerAnimated) {
+          tickerAnimated = true;
+          document.querySelectorAll('.ticker-num').forEach(el => {
+            const target = parseInt(el.dataset.count);
+            const suffix = el.dataset.suffix || '';
+            const duration = 1500;
+            const start = performance.now();
+            function tick(now) {
+              const elapsed = now - start;
+              const progress = Math.min(elapsed / duration, 1);
+              const eased = 1 - Math.pow(1 - progress, 3);
+              el.textContent = Math.floor(eased * target) + suffix;
+              if (progress < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+          });
+        }
+      });
+    }, { threshold: 0.3 });
+    const tickerSection = document.querySelector('.ticker-section');
+    if (tickerSection) tickerObserver.observe(tickerSection);
+
+    // ── Nav scroll state ──
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // ── Smooth scroll for anchor links ──
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // ── Notify form ──
+    function handleNotify(e) {
+      e.preventDefault();
+      const form = e.target;
+      const input = form.querySelector('input');
+      const btn = form.querySelector('button');
+      btn.textContent = '✓ Added!';
+      btn.style.color = '#22c55e';
+      btn.style.borderColor = 'rgba(34, 197, 94, 0.3)';
+      input.value = '';
+      setTimeout(() => {
+        btn.textContent = 'Notify Me';
+        btn.style.color = '';
+        btn.style.borderColor = '';
+      }, 3000);
+    }
+
+    // ── Mobile nav toggle ──
+    const mobileToggle = document.getElementById('mobileToggle');
+    const navLinks = document.querySelector('.nav-links');
+    if (mobileToggle) {
+      mobileToggle.addEventListener('click', () => {
+        const isHidden = getComputedStyle(navLinks).display === 'none';
+        navLinks.style.display = isHidden ? 'flex' : 'none';
+        navLinks.style.position = 'absolute';
+        navLinks.style.top = '64px';
+        navLinks.style.left = '0';
+        navLinks.style.right = '0';
+        navLinks.style.flexDirection = 'column';
+        navLinks.style.padding = '16px 24px';
+        navLinks.style.background = 'rgba(5, 5, 7, 0.95)';
+        navLinks.style.borderBottom = '1px solid var(--border-subtle)';
+        navLinks.style.gap = '4px';
+      });
+    }
+
+    // ── Parallax orbs on scroll ──
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      document.querySelectorAll('.hero-orb').forEach((orb, i) => {
+        orb.style.transform = `translateY(${y * (0.1 + i * 0.05)}px)`;
+      });
+    });
   </script>
 
 </body>
