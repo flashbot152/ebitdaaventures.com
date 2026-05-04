@@ -420,6 +420,12 @@
       align-items: center;
       justify-content: center;
       font-size: 1.5rem;
+      overflow: hidden;
+    }
+    .card-icon img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: inherit;
     }
     .card--wdyw .card-icon {
       background: linear-gradient(135deg, var(--wdyw-glow), rgba(255, 140, 0, 0.08));
@@ -669,10 +675,9 @@
       font-weight: 500;
     }
 
-    /* ── Contact CTA ── */
+    /* ── Contact Section ── */
     .cta-section {
       padding: 120px 0;
-      text-align: center;
       position: relative;
     }
     .cta-section::before {
@@ -694,8 +699,72 @@
       font-size: 1.1rem;
       color: var(--text-muted);
       max-width: 480px;
-      margin: 0 auto 40px;
       line-height: 1.7;
+      margin-bottom: 48px;
+    }
+    .contact-form {
+      max-width: 560px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-field label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
+    }
+    .form-field input,
+    .form-field textarea {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 0.9rem;
+      color: var(--text);
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.25s, box-shadow 0.25s;
+      width: 100%;
+    }
+    .form-field input::placeholder,
+    .form-field textarea::placeholder {
+      color: var(--text-dim);
+    }
+    .form-field input:focus,
+    .form-field textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .form-field textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+    .form-submit {
+      align-self: flex-start;
+    }
+    .form-success {
+      display: none;
+      padding: 16px 24px;
+      border-radius: 12px;
+      background: rgba(34, 197, 94, 0.08);
+      border: 1px solid rgba(34, 197, 94, 0.2);
+      color: #22c55e;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    @media (max-width: 640px) {
+      .form-row { grid-template-columns: 1fr; }
     }
 
     /* ── Footer ── */
@@ -846,7 +915,7 @@
         <div class="card card--wdyw reveal" id="cardWdyw">
           <div class="card-glow"></div>
           <div class="card-header">
-            <div class="card-icon">🍽</div>
+            <div class="card-icon"><img src="wdyw-icon.png" alt="whatdoyouwant? app icon"></div>
             <div class="card-status">
               <span class="status-dot"></span>
               Live on App Store
@@ -936,13 +1005,13 @@
         <div class="about-content reveal">
           <h3>The thesis</h3>
           <p>Ebitdaa Ventures builds software at the intersection of consumer behavior and operational intelligence. Every product starts with a real problem — felt firsthand — and ships with the speed and precision of a team that knows what good looks like from the inside.</p>
-          <p>The self-storage operating system wasn't designed by a product team in a conference room. It was built by an operator managing 20+ facilities who got tired of the tools that were supposed to help.</p>
+          <p>The self-storage operating system wasn't designed by a product team in a conference room. It was built by operators managing 20+ facilities who got tired of the tools that were supposed to help.</p>
         </div>
 
         <div class="founder-card reveal reveal-delay-1">
-          <div class="founder-name">Jordan Ellis</div>
-          <div class="founder-title">Founder &amp; CEO</div>
-          <p>Jordan founded Ebitdaa Ventures to build the software he wished existed — first for himself as an operator, then for every operator stuck with legacy tooling. The company's consumer products are rooted in the same philosophy: solve real friction, ship fast, iterate relentlessly.</p>
+          <div class="founder-name">Built by Operators</div>
+          <div class="founder-title">For the Modern Entrepreneur</div>
+          <p>Ebitdaa Ventures was founded by entrepreneurs who believe the best software comes from people who live inside the problem. We build tools for operators, decision-makers, and everyday consumers — the people legacy software forgot. Every product we ship is designed to move fast, stay lean, and solve real friction.</p>
         </div>
       </div>
     </div>
@@ -950,13 +1019,34 @@
 
   <hr class="divider">
 
-  <!-- Contact CTA -->
+  <!-- Contact -->
   <section class="cta-section" id="contact">
     <div class="container">
       <div class="section-label reveal">Contact</div>
       <h2 class="reveal reveal-delay-1">Let's build something.</h2>
       <p class="reveal reveal-delay-2">Whether you're an investor, potential partner, or curious operator — we'd love to hear from you.</p>
-      <a href="mailto:jordan@ebitdaaventures.com" class="btn btn--primary reveal reveal-delay-3">jordan@ebitdaaventures.com →</a>
+      <form class="contact-form reveal reveal-delay-3" id="contactForm" onsubmit="handleContact(event)">
+        <div class="form-row">
+          <div class="form-field">
+            <label for="cf-name">Full Name</label>
+            <input type="text" id="cf-name" name="name" placeholder="John Doe" required>
+          </div>
+          <div class="form-field">
+            <label for="cf-phone">Phone</label>
+            <input type="tel" id="cf-phone" name="phone" placeholder="(555) 000-0000">
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="cf-email">Email</label>
+          <input type="email" id="cf-email" name="email" placeholder="you@company.com" required>
+        </div>
+        <div class="form-field">
+          <label for="cf-message">Message</label>
+          <textarea id="cf-message" name="message" placeholder="Tell us about your project or inquiry..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn--primary form-submit">Send Message →</button>
+        <div class="form-success" id="formSuccess">✓ Message sent! We'll be in touch soon.</div>
+      </form>
     </div>
   </section>
 
@@ -968,7 +1058,7 @@
           &copy; 2026 Ebitdaa Ventures LLC
         </div>
         <div class="footer-right">
-          <a href="mailto:jordan@ebitdaaventures.com">Email</a>
+          <a href="#contact">Contact</a>
           <a href="https://apps.apple.com/app/whatdoyouwant/id6742500592" target="_blank" rel="noopener">App Store</a>
         </div>
       </div>
@@ -1077,6 +1167,35 @@
         btn.style.color = '';
         btn.style.borderColor = '';
       }, 3000);
+    }
+
+    // ── Contact form (mailto hidden from source via JS) ──
+    function handleContact(e) {
+      e.preventDefault();
+      const form = e.target;
+      const name = form.querySelector('#cf-name').value;
+      const email = form.querySelector('#cf-email').value;
+      const phone = form.querySelector('#cf-phone').value || 'Not provided';
+      const message = form.querySelector('#cf-message').value;
+      // Obfuscated email — assembled at runtime, never in HTML source
+      const t = ['ebitdaa','ventures','llc','@','gm','ail','.com'];
+      const dest = t[0]+t[1]+t[2]+t[3]+t[4]+t[5]+t[6];
+      const subject = encodeURIComponent('Website Inquiry from ' + name);
+      const body = encodeURIComponent(
+        'Name: ' + name + '\n' +
+        'Email: ' + email + '\n' +
+        'Phone: ' + phone + '\n\n' +
+        message
+      );
+      window.location.href = 'mail' + 'to:' + dest + '?subject=' + subject + '&body=' + body;
+      // Show success state
+      form.style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+      setTimeout(() => {
+        form.reset();
+        form.style.display = 'flex';
+        document.getElementById('formSuccess').style.display = 'none';
+      }, 5000);
     }
 
     // ── Mobile nav toggle ──
