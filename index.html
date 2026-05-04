@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ebitdaa Ventures LLC — Software Holding Company</title>
+  <meta name="description" content="Ebitdaa Ventures LLC is a software holding company building consumer and vertical SaaS products. Portfolio includes whatdoyouwant? and JustDashboard.">
+  <meta property="og:title" content="Ebitdaa Ventures LLC">
+  <meta property="og:description" content="Building consumer and vertical SaaS products.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ebitdaaventures.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #09090b;
+      --bg-card: #111113;
+      --bg-card-hover: #18181b;
+      --border: #27272a;
+      --border-subtle: #1e1e21;
+      --text: #fafafa;
+      --text-muted: #a1a1aa;
+      --text-dim: #71717a;
+      --accent: #6366f1;
+      --accent-glow: rgba(99, 102, 241, 0.15);
+      --wdyw-accent: #FF4E2A;
+      --wdyw-glow: rgba(255, 78, 42, 0.12);
+      --just-accent: #00B5E2;
+      --just-glow: rgba(0, 181, 226, 0.12);
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── Grain overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ── Layout ── */
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Navigation ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 0;
+      background: rgba(9, 9, 11, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .logo span { color: var(--text-dim); font-weight: 400; }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 200px 0 120px;
+      position: relative;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+    }
+    .hero-badge .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+    }
+    .hero h1 {
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1.05;
+      margin-bottom: 24px;
+      max-width: 700px;
+    }
+    .hero h1 .gradient {
+      background: linear-gradient(135deg, var(--accent), #a78bfa, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 520px;
+      line-height: 1.7;
+    }
+
+    /* ── Section ── */
+    section { padding: 100px 0; }
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 56px;
+    }
+
+    /* ── Portfolio Cards ── */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius);
+      padding: 40px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .card:hover {
+      border-color: var(--border);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+    }
+    .card:hover::before { opacity: 1; }
+    .card--wdyw::before {
+      background: linear-gradient(90deg, transparent, var(--wdyw-accent), transparent);
+    }
+    .card--wdyw:hover {
+      box-shadow: 0 8px 40px var(--wdyw-glow);
+    }
+    .card--just::before {
+      background: linear-gradient(90deg, transparent, var(--just-accent), transparent);
+    }
+    .card--just:hover {
+      box-shadow: 0 8px 40px var(--just-glow);
+    }
+    .card-icon {
+      width: 48px; height: 48px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 28px;
+    }
+    .card--wdyw .card-icon {
+      background: var(--wdyw-glow);
+      border: 1px solid rgba(255, 78, 42, 0.2);
+    }
+    .card--just .card-icon {
+      background: var(--just-glow);
+      border: 1px solid rgba(0, 181, 226, 0.2);
+    }
+    .card-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 20px;
+      padding: 4px 10px;
+      border-radius: 100px;
+    }
+    .card--wdyw .card-status {
+      color: var(--wdyw-accent);
+      background: var(--wdyw-glow);
+    }
+    .card--just .card-status {
+      color: var(--just-accent);
+      background: var(--just-glow);
+    }
+    .card h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-dim);
+    }
+
+    /* ── About / Founder ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .about-content h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .about-content p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+    .stats-row {
+      display: flex;
+      gap: 48px;
+      margin-top: 40px;
+    }
+    .stat-num {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, var(--text), var(--text-muted));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      margin-top: 4px;
+    }
+    .founder-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius);
+      padding: 40px;
+    }
+    .founder-card .founder-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .founder-card .founder-title {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      margin-bottom: 20px;
+    }
+    .founder-card p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.8;
+    }
+    .founder-meta {
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border-subtle);
+    }
+    .founder-meta-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+    }
+    .founder-meta-row span:last-child { color: var(--text-muted); }
+
+    /* ── Footer ── */
+    footer {
+      padding: 48px 0;
+      border-top: 1px solid var(--border-subtle);
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-left {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+    .footer-right {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+    .footer-right a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-right a:hover { color: var(--text); }
+
+    /* ── Divider ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border-subtle);
+      margin: 0;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .stats-row { gap: 32px; }
+      .hero { padding: 160px 0 80px; }
+      section { padding: 64px 0; }
+      .card { padding: 28px; }
+      .nav-links { gap: 20px; }
+    }
+    @media (max-width: 480px) {
+      .nav-links { display: none; }
+      .hero h1 { font-size: 2.2rem; }
+    }
+
+    /* ── Animations ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="container">
+      <a href="#" class="logo">ebitdaa <span>ventures</span></a>
+      <div class="nav-links">
+        <a href="#portfolio">Portfolio</a>
+        <a href="#about">About</a>
+        <a href="mailto:jordan@ebitdaaventures.com">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        Building in public
+      </div>
+      <h1>Software that <span class="gradient">moves</span> industries.</h1>
+      <p>Ebitdaa Ventures LLC is a software holding company building consumer and vertical SaaS products — from real-time group dining to self-storage operations.</p>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Portfolio -->
+  <section id="portfolio">
+    <div class="container">
+      <div class="section-label">Portfolio</div>
+      <h2 class="section-title">What we're building</h2>
+      <p class="section-desc">Two products. Two categories. One thesis: software built by operators outperforms software built by outsiders.</p>
+
+      <div class="portfolio-grid">
+        <!-- wdyw? Card -->
+        <div class="card card--wdyw fade-in">
+          <div class="card-icon">🍽</div>
+          <div class="card-status">
+            <span class="dot" style="width:5px;height:5px;border-radius:50%;background:var(--wdyw-accent);display:inline-block;"></span>
+            Live on App Store
+          </div>
+          <h3>whatdoyouwant?</h3>
+          <p>A collaborative iOS app for real-time group restaurant discovery. Swipe together, match instantly — no more "I don't know, what do you want?"</p>
+          <div class="card-tags">
+            <span class="tag">iOS</span>
+            <span class="tag">React Native</span>
+            <span class="tag">Firebase</span>
+            <span class="tag">Consumer</span>
+          </div>
+        </div>
+
+        <!-- JustDashboard Card -->
+        <div class="card card--just fade-in">
+          <div class="card-icon">📊</div>
+          <div class="card-status">
+            <span class="dot" style="width:5px;height:5px;border-radius:50%;background:var(--just-accent);display:inline-block;"></span>
+            In Development
+          </div>
+          <h3>JustDashboard</h3>
+          <p>An owner-facing analytics and operations interface for independent storage operators — powered by a full self-storage operating system built from the ground up.</p>
+          <div class="card-tags">
+            <span class="tag">Next.js</span>
+            <span class="tag">Vertical SaaS</span>
+            <span class="tag">Self-Storage</span>
+            <span class="tag">Analytics</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- About -->
+  <section id="about">
+    <div class="container">
+      <div class="section-label">About</div>
+      <h2 class="section-title">Operator-built software</h2>
+      <p class="section-desc">We don't build for industries we've read about. We build for industries we run.</p>
+
+      <div class="about-grid">
+        <div class="about-content fade-in">
+          <h3>The thesis</h3>
+          <p>Ebitdaa Ventures builds software at the intersection of consumer behavior and operational intelligence. Every product starts with a real problem — felt firsthand — and ships with the speed and precision of a team that knows what good looks like from the inside.</p>
+          <p>The self-storage operating system wasn't designed by a product team in a conference room. It was built by an operator managing 20+ facilities who got tired of the tools that were supposed to help.</p>
+          <div class="stats-row">
+            <div>
+              <div class="stat-num">2</div>
+              <div class="stat-label">Active products</div>
+            </div>
+            <div>
+              <div class="stat-num">20+</div>
+              <div class="stat-label">Facilities managed</div>
+            </div>
+            <div>
+              <div class="stat-num">2026</div>
+              <div class="stat-label">Founded</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="founder-card fade-in">
+          <div class="founder-name">Jordan Ellis</div>
+          <div class="founder-title">Founder & CEO</div>
+          <p>Jordan founded Ebitdaa Ventures to build the software he wished existed — first for himself as a self-storage operator, then for every operator stuck with legacy tooling. The company's consumer products are rooted in the same philosophy: solve real friction, ship fast, iterate relentlessly.</p>
+          <div class="founder-meta">
+            <div class="founder-meta-row">
+              <span>Location</span>
+              <span>St. Petersburg, FL</span>
+            </div>
+            <div class="founder-meta-row">
+              <span>Background</span>
+              <span>Self-Storage Operations</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-left">
+          &copy; 2026 Ebitdaa Ventures LLC &middot; St. Petersburg, FL
+        </div>
+        <div class="footer-right">
+          <a href="mailto:jordan@ebitdaaventures.com">jordan@ebitdaaventures.com</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Intersection Observer for fade-in animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
