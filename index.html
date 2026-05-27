@@ -31,9 +31,9 @@
       --wdyw-primary: #FF4E2A;
       --wdyw-secondary: #FF8C00;
       --wdyw-glow: rgba(255, 78, 42, 0.1);
-      --just-primary: #00B5E2;
-      --just-secondary: #2D4CB3;
-      --just-glow: rgba(0, 181, 226, 0.1);
+      --just-primary: #7C3AED;
+      --just-secondary: #5B21B6;
+      --just-glow: rgba(124, 58, 237, 0.1);
       --radius: 20px;
       --radius-sm: 12px;
     }
@@ -399,12 +399,12 @@
     }
 
     /* ── JustDashboard Card ── */
-    .card--just .card-glow { background: rgba(0, 181, 226, 0.06); top: -50px; right: -50px; }
+    .card--just .card-glow { background: rgba(124, 58, 237, 0.06); top: -50px; right: -50px; }
     .card--just::before {
       background: linear-gradient(90deg, transparent, var(--just-primary), var(--just-secondary), transparent);
     }
     .card--just:hover {
-      box-shadow: 0 12px 48px var(--just-glow), 0 0 0 1px rgba(0, 181, 226, 0.08);
+      box-shadow: 0 12px 48px var(--just-glow), 0 0 0 1px rgba(124, 58, 237, 0.08);
     }
 
     .card-header {
@@ -432,8 +432,8 @@
       border: 1px solid rgba(255, 78, 42, 0.15);
     }
     .card--just .card-icon {
-      background: linear-gradient(135deg, var(--just-glow), rgba(45, 76, 179, 0.08));
-      border: 1px solid rgba(0, 181, 226, 0.15);
+      background: linear-gradient(135deg, var(--just-glow), rgba(91, 33, 182, 0.08));
+      border: 1px solid rgba(124, 58, 237, 0.15);
     }
     .card-status {
       display: inline-flex;
@@ -454,7 +454,7 @@
     .card--just .card-status {
       color: var(--just-primary);
       background: var(--just-glow);
-      border: 1px solid rgba(0, 181, 226, 0.12);
+      border: 1px solid rgba(124, 58, 237, 0.12);
     }
     .status-dot {
       width: 5px; height: 5px;
@@ -462,7 +462,7 @@
       display: inline-block;
     }
     .card--wdyw .status-dot { background: var(--wdyw-primary); box-shadow: 0 0 6px rgba(255, 78, 42, 0.5); }
-    .card--just .status-dot { background: var(--just-primary); animation: pulse 2s ease-in-out infinite; }
+    .card--just .status-dot { background: var(--just-primary); box-shadow: 0 0 6px rgba(124, 58, 237, 0.5); animation: pulse 2s ease-in-out infinite; }
     .card h3 {
       font-size: 1.6rem;
       font-weight: 700;
@@ -568,8 +568,8 @@
     .notify-input::placeholder { color: var(--text-dim); }
     .notify-input:focus { border-color: var(--just-primary); }
     .notify-btn {
-      background: rgba(0, 181, 226, 0.12);
-      border: 1px solid rgba(0, 181, 226, 0.2);
+      background: rgba(124, 58, 237, 0.12);
+      border: 1px solid rgba(124, 58, 237, 0.2);
       border-radius: 8px;
       padding: 10px 16px;
       font-size: 0.82rem;
@@ -580,7 +580,7 @@
       transition: all 0.2s;
     }
     .notify-btn:hover {
-      background: rgba(0, 181, 226, 0.2);
+      background: rgba(124, 58, 237, 0.2);
     }
 
     /* ── About ── */
@@ -868,7 +868,7 @@
         Building in public
       </div>
       <h1 class="reveal reveal-delay-1">Software that <span class="gradient">moves</span> industries.</h1>
-      <p class="reveal reveal-delay-2">Ebitdaa Ventures LLC is a software holding company building consumer and vertical SaaS products — from real-time group dining to self-storage operations.</p>
+      <p class="reveal reveal-delay-2">Ebitdaa Ventures LLC is a software holding company building consumer and vertical SaaS products — from real-time group dining to Hojii, the self-storage operating system.</p>
       <div class="hero-ctas reveal reveal-delay-3">
         <a href="#portfolio" class="btn btn--primary">Explore Portfolio →</a>
         <a href="#about" class="btn btn--ghost">Our Story</a>
@@ -881,22 +881,22 @@
     <div class="marquee-track" id="marquee">
       <span class="marquee-item">Consumer Apps <span class="sep"></span></span>
       <span class="marquee-item">Vertical SaaS <span class="sep"></span></span>
-      <span class="marquee-item">Self-Storage Tech <span class="sep"></span></span>
-      <span class="marquee-item">Real-Time Collaboration <span class="sep"></span></span>
+      <span class="marquee-item">Self-Storage OS <span class="sep"></span></span>
+      <span class="marquee-item">AI Pricing <span class="sep"></span></span>
       <span class="marquee-item">Operator-Built <span class="sep"></span></span>
       <span class="marquee-item">iOS &amp; Web <span class="sep"></span></span>
-      <span class="marquee-item">Firebase <span class="sep"></span></span>
+      <span class="marquee-item">Hojii PMS <span class="sep"></span></span>
       <span class="marquee-item">Next.js <span class="sep"></span></span>
       <span class="marquee-item">React Native <span class="sep"></span></span>
       <span class="marquee-item">Analytics <span class="sep"></span></span>
       <!-- duplicate for seamless loop -->
       <span class="marquee-item">Consumer Apps <span class="sep"></span></span>
       <span class="marquee-item">Vertical SaaS <span class="sep"></span></span>
-      <span class="marquee-item">Self-Storage Tech <span class="sep"></span></span>
-      <span class="marquee-item">Real-Time Collaboration <span class="sep"></span></span>
+      <span class="marquee-item">Self-Storage OS <span class="sep"></span></span>
+      <span class="marquee-item">AI Pricing <span class="sep"></span></span>
       <span class="marquee-item">Operator-Built <span class="sep"></span></span>
       <span class="marquee-item">iOS &amp; Web <span class="sep"></span></span>
-      <span class="marquee-item">Firebase <span class="sep"></span></span>
+      <span class="marquee-item">Hojii PMS <span class="sep"></span></span>
       <span class="marquee-item">Next.js <span class="sep"></span></span>
       <span class="marquee-item">React Native <span class="sep"></span></span>
       <span class="marquee-item">Analytics <span class="sep"></span></span>
@@ -938,23 +938,23 @@
           </a>
         </div>
 
-        <!-- JustDashboard -->
+        <!-- Hojii -->
         <div class="card card--just reveal reveal-delay-1" id="cardJust">
           <div class="card-glow"></div>
           <div class="card-header">
-            <div class="card-icon">📊</div>
+            <div class="card-icon" style="font-weight:900;font-size:1.1rem;letter-spacing:-0.03em">h.</div>
             <div class="card-status">
               <span class="status-dot"></span>
               Coming Soon
             </div>
           </div>
-          <h3>JustDashboard</h3>
-          <p>An owner-facing analytics and operations interface for independent storage operators — powered by a full self-storage operating system built from the ground up.</p>
+          <h3>Hojii</h3>
+          <p>A complete self-storage operating system — property management, AI-powered pricing, tenant communications, and owner dashboards — built by operators who manage 20+ facilities.</p>
           <div class="card-tags">
             <span class="tag">Next.js</span>
             <span class="tag">Vertical SaaS</span>
             <span class="tag">Self-Storage</span>
-            <span class="tag">Analytics</span>
+            <span class="tag">AI Pricing</span>
           </div>
           <div class="card-action">
             🔔 Get notified at launch
