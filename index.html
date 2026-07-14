@@ -34,6 +34,9 @@
       --just-primary: #7C3AED;
       --just-secondary: #5B21B6;
       --just-glow: rgba(124, 58, 237, 0.1);
+      --tidz-primary: #0D9488;
+      --tidz-secondary: #0F766E;
+      --tidz-glow: rgba(13, 148, 136, 0.1);
       --radius: 20px;
       --radius-sm: 12px;
     }
@@ -547,6 +550,42 @@
     .app-store-badge .badge-sub { font-size: 0.6rem; font-weight: 400; display: block; }
     .app-store-badge .badge-main { font-size: 1rem; font-weight: 600; display: block; }
 
+    /* ── Tidzee Card ── */
+    .card--tidz .card-glow { background: rgba(13, 148, 136, 0.06); top: -50px; right: -50px; }
+    .card--tidz::before {
+      background: linear-gradient(90deg, transparent, var(--tidz-primary), var(--tidz-secondary), transparent);
+    }
+    .card--tidz:hover {
+      box-shadow: 0 12px 48px var(--tidz-glow), 0 0 0 1px rgba(13, 148, 136, 0.08);
+    }
+    .card--tidz .card-icon {
+      background: linear-gradient(135deg, var(--tidz-glow), rgba(15, 118, 110, 0.08));
+      border: 1px solid rgba(13, 148, 136, 0.15);
+    }
+    .card--tidz .card-status {
+      color: var(--tidz-primary);
+      background: var(--tidz-glow);
+      border: 1px solid rgba(13, 148, 136, 0.12);
+    }
+    .card--tidz .status-dot { background: var(--tidz-primary); box-shadow: 0 0 6px rgba(13, 148, 136, 0.5); animation: pulse 2s ease-in-out infinite; }
+    .card--tidz.card-wide {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+    @media (max-width: 900px) {
+      .card--tidz.card-wide { grid-template-columns: 1fr; gap: 24px; }
+    }
+    .card--tidz .notify-input:focus { border-color: var(--tidz-primary); }
+    .card--tidz .notify-btn {
+      background: rgba(13, 148, 136, 0.12);
+      border: 1px solid rgba(13, 148, 136, 0.2);
+      color: var(--tidz-primary);
+    }
+    .card--tidz .notify-btn:hover { background: rgba(13, 148, 136, 0.22); }
+
     /* ── Coming soon notify ── */
     .notify-form {
       display: flex;
@@ -868,7 +907,7 @@
         Building in public
       </div>
       <h1 class="reveal reveal-delay-1">Software that <span class="gradient">moves</span> industries.</h1>
-      <p class="reveal reveal-delay-2">Ebitdaa Ventures LLC is a software holding company building consumer and vertical SaaS products — from real-time group dining to Hojii, the self-storage operating system.</p>
+      <p class="reveal reveal-delay-2">Ebitdaa Ventures LLC is a software holding company building consumer and vertical SaaS products — from real-time group dining to Hojii (self-storage OS) and Tidzee (AI cleaning platform).</p>
       <div class="hero-ctas reveal reveal-delay-3">
         <a href="#portfolio" class="btn btn--primary">Explore Portfolio →</a>
         <a href="#about" class="btn btn--ghost">Our Story</a>
@@ -886,6 +925,8 @@
       <span class="marquee-item">Operator-Built <span class="sep"></span></span>
       <span class="marquee-item">iOS &amp; Web <span class="sep"></span></span>
       <span class="marquee-item">Hojii PMS <span class="sep"></span></span>
+      <span class="marquee-item">Tidzee <span class="sep"></span></span>
+      <span class="marquee-item">AI Cleaning <span class="sep"></span></span>
       <span class="marquee-item">Next.js <span class="sep"></span></span>
       <span class="marquee-item">React Native <span class="sep"></span></span>
       <span class="marquee-item">Analytics <span class="sep"></span></span>
@@ -897,6 +938,8 @@
       <span class="marquee-item">Operator-Built <span class="sep"></span></span>
       <span class="marquee-item">iOS &amp; Web <span class="sep"></span></span>
       <span class="marquee-item">Hojii PMS <span class="sep"></span></span>
+      <span class="marquee-item">Tidzee <span class="sep"></span></span>
+      <span class="marquee-item">AI Cleaning <span class="sep"></span></span>
       <span class="marquee-item">Next.js <span class="sep"></span></span>
       <span class="marquee-item">React Native <span class="sep"></span></span>
       <span class="marquee-item">Analytics <span class="sep"></span></span>
@@ -964,6 +1007,36 @@
             <button type="submit" class="notify-btn">Notify Me</button>
           </form>
         </div>
+
+        <!-- Tidzee -->
+        <div class="card card--tidz card-wide reveal reveal-delay-2" id="cardTidz">
+          <div class="card-glow"></div>
+          <div>
+            <div class="card-header">
+              <div class="card-icon">🧹</div>
+              <div class="card-status">
+                <span class="status-dot"></span>
+                In Development
+              </div>
+            </div>
+            <h3>Tidzee</h3>
+            <p>An AI-powered cleaning business platform — instant quotes, automated scheduling, dispatch operations, and a full recruiting funnel. Built to run a modern cleaning company end-to-end, from the first booking to the last invoice.</p>
+          </div>
+          <div>
+            <div class="card-tags">
+              <span class="tag">Next.js</span>
+              <span class="tag">AI Scheduling</span>
+              <span class="tag">Service Business</span>
+              <span class="tag">Stripe</span>
+              <span class="tag">Twilio</span>
+            </div>
+            <form class="notify-form" id="notifyFormTidz" onsubmit="handleNotifyTidz(event)" style="margin-top:8px">
+              <input type="email" class="notify-input" placeholder="Get notified at launch" required>
+              <button type="submit" class="notify-btn">Notify Me</button>
+            </form>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -973,7 +1046,7 @@
     <div class="container">
       <div class="ticker-grid">
         <div class="ticker-item reveal">
-          <div class="ticker-num" data-count="2">0</div>
+          <div class="ticker-num" data-count="3">0</div>
           <div class="ticker-label">Products in Portfolio</div>
         </div>
         <div class="ticker-item reveal reveal-delay-1">
@@ -1162,6 +1235,22 @@
       btn.style.color = '#22c55e';
       btn.style.borderColor = 'rgba(34, 197, 94, 0.3)';
       input.value = '';
+      setTimeout(() => {
+        btn.textContent = 'Notify Me';
+        btn.style.color = '';
+        btn.style.borderColor = '';
+      }, 3000);
+    }
+
+    // ── Tidzee Notify form ──
+    function handleNotifyTidz(e) {
+      e.preventDefault();
+      const form = e.target;
+      const btn = form.querySelector('button');
+      btn.textContent = '✓ Added!';
+      btn.style.color = '#22c55e';
+      btn.style.borderColor = 'rgba(34, 197, 94, 0.3)';
+      form.querySelector('input').value = '';
       setTimeout(() => {
         btn.textContent = 'Notify Me';
         btn.style.color = '';
