@@ -1339,22 +1339,19 @@
       btn.textContent = 'Sending...';
       btn.disabled = true;
 
-      const formData = new FormData(form);
-      // Recipient assembled at runtime — never exposed in HTML source
-      const r = ['jordan','@','ebitdaa','ventures','.com'];
-      const dest = r.join('');
-      formData.append('_subject', 'New Contact Inquiry — ebitdaaventures.com');
-      formData.append('_captcha', 'false');
-      formData.append('_template', 'table');
+      const name = form.querySelector('#cf-name').value;
+      const email = form.querySelector('#cf-email').value;
+      const phone = form.querySelector('#cf-phone').value || '';
+      const message = form.querySelector('#cf-message').value;
 
       try {
-        const res = await fetch('https://formsubmit.co/ajax/' + dest, {
+        const res = await fetch('https://hojii.xyz/api/contact', {
           method: 'POST',
-          headers: { 'Accept': 'application/json' },
-          body: formData
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ name, email, phone, message })
         });
         const data = await res.json();
-        if (data.success === 'true' || data.success === true) {
+        if (res.ok && data.success) {
           form.reset();
           document.getElementById('contactModal').classList.add('active');
         } else {
