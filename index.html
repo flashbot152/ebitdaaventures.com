@@ -802,6 +802,68 @@
       font-size: 0.9rem;
       font-weight: 500;
     }
+
+    /* ── Contact Success Modal ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .modal-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 48px 40px;
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      transform: translateY(24px) scale(0.97);
+      transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+    }
+    .modal-overlay.active .modal-card {
+      transform: translateY(0) scale(1);
+    }
+    .modal-icon {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #22c55e;
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+    .modal-card h3 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+    .modal-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+    .modal-close {
+      cursor: pointer;
+    }
     @media (max-width: 640px) {
       .form-row { grid-template-columns: 1fr; }
     }
@@ -1117,11 +1179,21 @@
           <label for="cf-message">Message</label>
           <textarea id="cf-message" name="message" placeholder="Tell us about your project or inquiry..." required></textarea>
         </div>
-        <button type="submit" class="btn btn--primary form-submit">Send Message →</button>
+        <button type="submit" class="btn btn--primary form-submit" id="contactSubmitBtn">Send Message →</button>
         <div class="form-success" id="formSuccess">✓ Message sent! We'll be in touch soon.</div>
       </form>
     </div>
   </section>
+
+  <!-- Contact Success Modal -->
+  <div class="modal-overlay" id="contactModal">
+    <div class="modal-card">
+      <div class="modal-icon">✓</div>
+      <h3>Message Received!</h3>
+      <p>We'll be in contact shortly.</p>
+      <button class="btn btn--primary modal-close" onclick="document.getElementById('contactModal').classList.remove('active')">Got it</button>
+    </div>
+  </div>
 
   <!-- Footer -->
   <footer>
@@ -1258,33 +1330,42 @@
       }, 3000);
     }
 
-    // ── Contact form (mailto hidden from source via JS) ──
-    function handleContact(e) {
+    // ── Contact form — submits via FormSubmit.co, shows popup on success ──
+    async function handleContact(e) {
       e.preventDefault();
       const form = e.target;
-      const name = form.querySelector('#cf-name').value;
-      const email = form.querySelector('#cf-email').value;
-      const phone = form.querySelector('#cf-phone').value || 'Not provided';
-      const message = form.querySelector('#cf-message').value;
-      // Obfuscated email — assembled at runtime, never in HTML source
-      const t = ['info','@','ebitdaa','ventures','.com'];
-      const dest = t[0]+t[1]+t[2]+t[3]+t[4];
-      const subject = encodeURIComponent('Website Inquiry from ' + name);
-      const body = encodeURIComponent(
-        'Name: ' + name + '\n' +
-        'Email: ' + email + '\n' +
-        'Phone: ' + phone + '\n\n' +
-        message
-      );
-      window.location.href = 'mail' + 'to:' + dest + '?subject=' + subject + '&body=' + body;
-      // Show success state
-      form.style.display = 'none';
-      document.getElementById('formSuccess').style.display = 'block';
-      setTimeout(() => {
-        form.reset();
-        form.style.display = 'flex';
-        document.getElementById('formSuccess').style.display = 'none';
-      }, 5000);
+      const btn = document.getElementById('contactSubmitBtn');
+      const origText = btn.textContent;
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+
+      const formData = new FormData(form);
+      // Recipient assembled at runtime — never exposed in HTML source
+      const r = ['jordan','@','ebitdaa','ventures','.com'];
+      const dest = r.join('');
+      formData.append('_subject', 'New Contact Inquiry — ebitdaaventures.com');
+      formData.append('_captcha', 'false');
+      formData.append('_template', 'table');
+
+      try {
+        const res = await fetch('https://formsubmit.co/ajax/' + dest, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: formData
+        });
+        const data = await res.json();
+        if (data.success === 'true' || data.success === true) {
+          form.reset();
+          document.getElementById('contactModal').classList.add('active');
+        } else {
+          throw new Error('Submission failed');
+        }
+      } catch (err) {
+        alert('Something went wrong. Please try again.');
+      } finally {
+        btn.textContent = origText;
+        btn.disabled = false;
+      }
     }
 
     // ── Mobile nav toggle ──
